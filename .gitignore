@@ -1,0 +1,10 @@
+node_modules/
+dist/
+release/
+.build-node/
+public/pdf.worker.min.mjs
+public/cmaps/
+public/standard_fonts/
+*.log
+.DS_Store
+Thumbs.db

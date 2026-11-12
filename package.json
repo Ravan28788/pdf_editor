@@ -1,0 +1,86 @@
+{
+  "name": "jadepdf-editor",
+  "version": "1.0.0",
+  "description": "Sejda-inspired full-featured offline PDF Editor & Desktop Toolkit for Windows",
+  "main": "electron/main.cjs",
+  "author": "JadePDF Studio",
+  "license": "MIT",
+  "scripts": {
+    "prepare:assets": "node scripts/prepare-assets.mjs",
+    "predev": "node scripts/prepare-assets.mjs",
+    "dev": "vite",
+    "prebuild": "node scripts/prepare-assets.mjs",
+    "build": "vite build",
+    "typecheck": "tsc --noEmit",
+    "electron:dev": "node scripts/dev-electron.mjs",
+    "build:win": "npm run typecheck && npm run build && electron-builder --win",
+    "build:win:portable": "npm run typecheck && npm run build && electron-builder --win portable",
+    "build:win:installer": "npm run typecheck && npm run build && electron-builder --win nsis"
+  },
+  "devDependencies": {
+    "@cantoo/pdf-lib": "^2.11.0",
+    "@types/react": "^18.3.0",
+    "@types/react-dom": "^18.3.0",
+    "@vitejs/plugin-react": "^4.3.0",
+    "electron": "^33.0.0",
+    "electron-builder": "^26.0.0",
+    "jszip": "^3.10.1",
+    "lucide-react": "^0.460.0",
+    "pdfjs-dist": "4.8.69",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "typescript": "5.6.3",
+    "vite": "^5.4.0"
+  },
+  "build": {
+    "appId": "com.jadepdf.editor.windows",
+    "productName": "JadePDF Editor",
+    "asar": true,
+    "directories": {
+      "output": "release",
+      "buildResources": "build"
+    },
+    "files": [
+      "dist/**/*",
+      "electron/**/*",
+      "package.json"
+    ],
+    "win": {
+      "icon": "build/icon.ico",
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
+        }
+      ]
+    },
+    "fileAssociations": [
+      {
+        "ext": "pdf",
+        "name": "PDF Document",
+        "description": "Portable Document Format",
+        "role": "Editor"
+      }
+    ],
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "JadePDF Editor",
+      "allowElevation": true,
+      "perMachine": true
+    },
+    "portable": {
+      "artifactName": "${productName}-${version}-Portable-x64.${ext}"
+    }
+  }
+}
