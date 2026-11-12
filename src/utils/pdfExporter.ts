@@ -1,6 +1,7 @@
 import {
   LineCapStyle,
   PDFArray,
+  PDFDict,
   PDFDocument,
   PDFFont,
   PDFName,
@@ -144,14 +145,14 @@ async function embedAnyImage(doc: PDFDocument, dataUrl: string) {
   return doc.embedPng(pngBytes);
 }
 
-function appendPageAnnotation(page: PDFPage, doc: PDFDocument, annotDict: ReturnType<PDFDocument['context']['obj']>) {
+function appendPageAnnotation(page: PDFPage, doc: PDFDocument, annotDict: PDFDict) {
   const ref = doc.context.register(annotDict);
-  let annots = page.node.get(PDFName.of('Annots'));
-  if (!(annots instanceof PDFArray)) {
+  let annots = page.node.lookupMaybe(PDFName.of('Annots'), PDFArray);
+  if (!annots) {
     annots = doc.context.obj([]);
     page.node.set(PDFName.of('Annots'), annots);
   }
-  (annots as PDFArray).push(ref);
+  annots.push(ref);
 }
 
 function wrapLinesToWidth(text: string, font: PDFFont, fontSize: number, maxWidth: number): string[] {
