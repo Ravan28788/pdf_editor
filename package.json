@@ -13,9 +13,9 @@
     "build": "vite build",
     "typecheck": "tsc --noEmit",
     "electron:dev": "node scripts/dev-electron.mjs",
-    "build:win": "npm run typecheck && npm run build && electron-builder --win",
-    "build:win:portable": "npm run typecheck && npm run build && electron-builder --win portable",
-    "build:win:installer": "npm run typecheck && npm run build && electron-builder --win nsis"
+    "build:win": "npm run typecheck && npm run build && electron-builder --win --publish never",
+    "build:win:portable": "npm run typecheck && npm run build && electron-builder --win portable --publish never",
+    "build:win:installer": "npm run typecheck && npm run build && electron-builder --win nsis --publish never"
   },
   "devDependencies": {
     "@cantoo/pdf-lib": "^2.11.0",

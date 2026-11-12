@@ -108,7 +108,7 @@ if %errorlevel% neq 0 (
 echo [5/5] Packaging standalone Windows Installer + Portable .EXE...
 set "CSC_IDENTITY_AUTO_DISCOVERY=false"
 set "DEBUG=@electron/get*"
-call npx electron-builder --win
+call npx electron-builder --win --publish never
 set "BUILD_ERR=%errorlevel%"
 set "DEBUG="
 if %BUILD_ERR% neq 0 (
